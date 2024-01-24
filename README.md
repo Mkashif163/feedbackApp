@@ -11,12 +11,10 @@ The live version of the Feedback App is hosted on AWS S3. You can access it thro
 The AWS Lambda functions for handling feedback are located in the `api` folder. These functions are responsible for managing data related to user feedback. The functions include:
 
 - **List Feedback Data:**
-  - Path: `/api/listFeedback`
   - Method: `GET`
   - Description: Retrieves a list of feedback data.
 
 - **Create Feedback Entry:**
-  - Path: `/api/createFeedback`
   - Method: `POST`
   - Description: Creates a new feedback entry.
 
