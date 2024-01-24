@@ -1,52 +1,69 @@
-import { StarIcon } from "@heroicons/react/20/solid";
+import { useSelector } from "react-redux";
+import { selectSelectedProduct } from "../../components/products/productSlice";
+import FeedbackForm from "../../components/feedbackForm/FeedbackForm";
+import FeedBacks from "../../components/feedbackTable/FeedBacks";
 
 export default function ProductPage() {
- const product = null;
- 
-  return (
-    <div className="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
+  const product = useSelector(selectSelectedProduct);
 
-    { product && <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
-        <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
+  if (!product) {
+    return null;
+  }
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <div className="md:flex-1 p-8">
+        <div className="flex items-center mb-4">
           <img
-            src={product.imageSrc}
-            alt={product.imageAlt}
-            className="object-cover object-center"
+            src={product.thumbnail}
+            alt={product.title}
+            className="w-3/4 h-auto rounded-lg shadow-lg mr-4"
           />
         </div>
-        <div className="sm:col-span-8 lg:col-span-7">
-          <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">
-            {product.name}
-          </h2>
-          <section aria-labelledby="information-heading" className="mt-2">
-            <h3 id="information-heading" className="sr-only">
-              Product information
-            </h3>
-            <p className="text-2xl text-gray-900">{product.price}</p>
-            {/* Reviews */}
-            <div className="mt-6">
-              <h4 className="sr-only">Reviews</h4>
-              <div className="flex items-center">
-                <div className="flex items-center">
-                  {[0, 1, 2, 3, 4].map((rating) => (
-                    <StarIcon
-                      key={rating}
-                      className={classNames(
-                        product.rating > rating
-                          ? "text-gray-900"
-                          : "text-gray-200",
-                        "h-5 w-5 flex-shrink-0"
-                      )}
-                      aria-hidden="true"
-                    />
-                  ))}
-                </div>
-                <p className="sr-only">{product.rating} out of 5 stars</p>
-              </div>
-            </div>
-          </section>
+        <div className="flex items-center mt-4">
+          {product.images.map((image, index) => (
+            <img
+              key={index}
+              src={image}
+              alt={`Product Image ${index + 1}`}
+              className="w-1/6 h-auto rounded-lg shadow-lg mr-2"
+            />
+          ))}
         </div>
-      </div>}
+        <section aria-labelledby="information-heading" className="mt-2">
+          <div>
+            <h2 className="text-3xl font-bold mb-2">{product.title}</h2>
+            <p className="text-2xl mb-2">${product.price}</p>
+            <div className="flex items-center">
+              <p className="mr-2">{product.rating}</p>
+            </div>
+          </div>
+          <h3 id="information-heading" className="text-lg font-medium">
+            Product Information
+          </h3>
+          <p className="text-gray-700">{product.description}</p>
+          <ul className="mt-4 list-disc pl-4">
+            <li>
+              <strong>Brand:</strong> {product.brand}
+            </li>
+            <li>
+              <strong>Category:</strong> {product.category}
+            </li>
+            <li>
+              <strong>Discount Percentage:</strong> {product.discountPercentage}
+              %
+            </li>
+            <li>
+              <strong>Stock:</strong> {product.stock}
+            </li>
+          </ul>
+        </section>
+      </div>
+
+      <div className="md:flex-1 p-8">
+        <FeedBacks />
+        <FeedbackForm productId={product.id} />
+      </div>
     </div>
   );
 }

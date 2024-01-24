@@ -5,15 +5,15 @@ import Header from "./utils/Header";
 
 function App() {
   return (
-   <>
-   <Header />
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/product/:id" element={<ProductPage />} />
-      </Routes>
-    </BrowserRouter>
-   </>
+    <>
+      <Header />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/product/:id" element={<ProductPage />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
